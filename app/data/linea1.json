@@ -1,0 +1,116 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Linea 1" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-99.200152, 19.400175], 
+          [-99.189266, 19.403981],
+          [-99.182060, 19.408705],
+          [-99.174546, 19.413014],
+          [-99.167130, 19.416999],
+          [-99.156849, 19.420194],
+          [-99.145769, 19.420829],
+          [-99.134374, 19.416876],
+          [-99.127993, 19.414521],
+          [-99.121614, 19.412171],
+          [-99.115182, 19.410215],
+          [-99.110018, 19.408361],
+          [-99.101773, 19.405760],
+          [-99.093907, 19.404158],
+          [-99.087460, 19.403170],
+          [-99.079348, 19.401815],
+          [-99.072894, 19.402061]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Observatorio" },
+      "geometry": { "type": "Point", "coordinates": [-99.200152, 19.400175] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Tacubaya" },
+      "geometry": { "type": "Point", "coordinates": [-99.189266, 19.403981] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Juanacatlán" },
+      "geometry": { "type": "Point", "coordinates": [-99.182060, 19.408705] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Chapultepec" },
+      "geometry": { "type": "Point", "coordinates": [-99.174546, 19.413014] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Sevilla" },
+      "geometry": { "type": "Point", "coordinates": [-99.167130, 19.416999] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Insurgentes" },
+      "geometry": { "type": "Point", "coordinates": [-99.156849, 19.420194] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Cuauhtémoc" },
+      "geometry": { "type": "Point", "coordinates": [-99.145769, 19.420829] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Balderas" },
+      "geometry": { "type": "Point", "coordinates": [-99.134374, 19.416876] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Salto del Agua" },
+      "geometry": { "type": "Point", "coordinates": [-99.127993, 19.414521] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Isabel la Católica" },
+      "geometry": { "type": "Point", "coordinates": [-99.121614, 19.412171] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Pino Suárez" },
+      "geometry": { "type": "Point", "coordinates": [-99.115182, 19.410215] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "San Lázaro" },
+      "geometry": { "type": "Point", "coordinates": [-99.101773, 19.405760] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Moctezuma" },
+      "geometry": { "type": "Point", "coordinates": [-99.093907, 19.404158] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Balbuena" },
+      "geometry": { "type": "Point", "coordinates": [-99.087460, 19.403170] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Boulevard Puerto Aéreo" },
+      "geometry": { "type": "Point", "coordinates": [-99.079348, 19.401815] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Gómez Farías" },
+      "geometry": { "type": "Point", "coordinates": [-99.072894, 19.402061] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Pantitlán" },
+      "geometry": { "type": "Point", "coordinates": [-99.072000, 19.400500] }
+    }
+  ]
+}
