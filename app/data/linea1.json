@@ -3,114 +3,134 @@
   "features": [
     {
       "type": "Feature",
-      "properties": { "name": "Linea 1" },
+      "properties": {
+        "name": "Linea 1"
+      },
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [-99.200152, 19.400175], 
-          [-99.189266, 19.403981],
-          [-99.182060, 19.408705],
-          [-99.174546, 19.413014],
-          [-99.167130, 19.416999],
-          [-99.156849, 19.420194],
-          [-99.145769, 19.420829],
-          [-99.134374, 19.416876],
-          [-99.127993, 19.414521],
-          [-99.121614, 19.412171],
-          [-99.115182, 19.410215],
-          [-99.110018, 19.408361],
-          [-99.101773, 19.405760],
-          [-99.093907, 19.404158],
-          [-99.087460, 19.403170],
-          [-99.079348, 19.401815],
-          [-99.072894, 19.402061]
+          [-99.2003977543299, 19.398833819182247],
+          [-99.18751425193106, 19.40249896709996],
+          [-99.1820692928769, 19.413031123972758],
+          [-99.17637000321425, 19.421941993235503],
+          [-99.1710699583048, 19.421658643862944],
+          [-99.16298157938398, 19.423928062764197],
+          [-99.15451854554179, 19.4256618712002],
+          [-99.14923995830472, 19.426886118447253],
+          [-99.1433930352026, 19.427236495041974],
+          [-99.13783197437802, 19.42666223414042],
+          [-99.13295073205039, 19.42451151785318],
+          [-99.12524219342963, 19.425710833995552],
+          [-99.12093146088657, 19.42970186717111],
+          [-99.11414084554173, 19.431203276937],
+          [-99.10925867437803, 19.426541988362075],
+          [-99.10275420321426, 19.423997472859888],
+          [-99.09621546830027, 19.419915514349768],
+          [-99.09024113946408, 19.416588439401576],
+          [-99.08263963894657, 19.411966146853462],
+          [-99.07437991645813, 19.415222491593696]
         ]
       }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Observatorio" },
-      "geometry": { "type": "Point", "coordinates": [-99.200152, 19.400175] }
+      "geometry": { "type": "Point", "coordinates": [-99.2003977543299, 19.398833819182247] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Tacubaya" },
-      "geometry": { "type": "Point", "coordinates": [-99.189266, 19.403981] }
+      "geometry": { "type": "Point", "coordinates": [-99.18751425193106, 19.40249896709996] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Juanacatlán" },
-      "geometry": { "type": "Point", "coordinates": [-99.182060, 19.408705] }
+      "geometry": { "type": "Point", "coordinates": [-99.1820692928769, 19.413031123972758] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Chapultepec" },
-      "geometry": { "type": "Point", "coordinates": [-99.174546, 19.413014] }
+      "geometry": { "type": "Point", "coordinates": [-99.17637000321425, 19.421941993235503] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Sevilla" },
-      "geometry": { "type": "Point", "coordinates": [-99.167130, 19.416999] }
+      "geometry": { "type": "Point", "coordinates": [-99.1710699583048, 19.421658643862944] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Insurgentes" },
-      "geometry": { "type": "Point", "coordinates": [-99.156849, 19.420194] }
+      "geometry": { "type": "Point", "coordinates": [-99.16298157938398, 19.423928062764197] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Cuauhtémoc" },
-      "geometry": { "type": "Point", "coordinates": [-99.145769, 19.420829] }
+      "geometry": { "type": "Point", "coordinates": [-99.15451854554179, 19.4256618712002] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Balderas" },
-      "geometry": { "type": "Point", "coordinates": [-99.134374, 19.416876] }
+      "geometry": { "type": "Point", "coordinates": [-99.14923995830472, 19.426886118447253] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Salto del Agua" },
-      "geometry": { "type": "Point", "coordinates": [-99.127993, 19.414521] }
+      "geometry": { "type": "Point", "coordinates": [-99.1433930352026, 19.427236495041974] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Isabel la Católica" },
-      "geometry": { "type": "Point", "coordinates": [-99.121614, 19.412171] }
+      "geometry": { "type": "Point", "coordinates": [-99.13783197437802, 19.42666223414042] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Pino Suárez" },
-      "geometry": { "type": "Point", "coordinates": [-99.115182, 19.410215] }
+      "geometry": { "type": "Point", "coordinates": [-99.13295073205039, 19.42451151785318] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Merced" },
+      "geometry": { "type": "Point", "coordinates": [-99.12524219342963, 19.425710833995552] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Candelaria" },
+      "geometry": { "type": "Point", "coordinates": [-99.12093146088657, 19.42970186717111] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "San Lázaro" },
-      "geometry": { "type": "Point", "coordinates": [-99.101773, 19.405760] }
+      "geometry": { "type": "Point", "coordinates": [-99.11414084554173, 19.431203276937] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Moctezuma" },
-      "geometry": { "type": "Point", "coordinates": [-99.093907, 19.404158] }
+      "geometry": { "type": "Point", "coordinates": [-99.10925867437803, 19.426541988362075] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Balbuena" },
-      "geometry": { "type": "Point", "coordinates": [-99.087460, 19.403170] }
+      "geometry": { "type": "Point", "coordinates": [-99.10275420321426, 19.423997472859888] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Boulevard Puerto Aéreo" },
-      "geometry": { "type": "Point", "coordinates": [-99.079348, 19.401815] }
+      "geometry": { "type": "Point", "coordinates": [-99.09621546830027, 19.419915514349768] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Gómez Farías" },
-      "geometry": { "type": "Point", "coordinates": [-99.072894, 19.402061] }
+      "geometry": { "type": "Point", "coordinates": [-99.09024113946408, 19.416588439401576] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "estacion": "Zaragoza" },
+      "geometry": { "type": "Point", "coordinates": [-99.08263963894657, 19.411966146853462] }
     },
     {
       "type": "Feature",
       "properties": { "estacion": "Pantitlán" },
-      "geometry": { "type": "Point", "coordinates": [-99.072000, 19.400500] }
+      "geometry": { "type": "Point", "coordinates": [-99.07437991645813, 19.415222491593696] }
     }
   ]
 }
