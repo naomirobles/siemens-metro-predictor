@@ -127,7 +127,15 @@ export default function Linea1Page() {
         <div className="flex-1">
           <MapaMetro>
             <Linea1Layer predicciones={predicciones} key={keyCounter} />
-            <TecnicosLayer tecnicos={tecnicos} />
+            <TecnicosLayer
+              tecnicos={tecnicos}
+              tecnicoSeleccionado={tecnicoSeleccionado}
+              onSeleccionarTecnico={(id) => {
+                if (modoAsignacion) {
+                  setTecnicoSeleccionado(tecnicoSeleccionado === id ? null : id);
+                }
+              }}
+            />
             <MapClickHandler
               onMapClick={asignarDestino}
               enabled={modoAsignacion && tecnicoSeleccionado !== null}

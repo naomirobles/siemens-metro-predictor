@@ -7,17 +7,24 @@ import { Tecnico, getColorPorEstado, getTextoEstado } from "@/app/utils/tecnicos
 
 interface Props {
   tecnicos: Tecnico[];
+  tecnicoSeleccionado: string | null;
+  onSeleccionarTecnico: (tecnicoId: string) => void;
 }
 
-export default function TecnicosLayer({ tecnicos }: Props) {
+export default function TecnicosLayer({ tecnicos, tecnicoSeleccionado, onSeleccionarTecnico }: Props) {
   // Forzar actualización cuando cambien los técnicos
   useEffect(() => {
     // Este efecto se ejecuta cada vez que cambian los técnicos
   }, [tecnicos]);
 
   // Crear ícono personalizado para cada técnico
-  const crearIconoTecnico = (estado: string) => {
+  const crearIconoTecnico = (estado: string, isSelected: boolean) => {
     const color = getColorPorEstado(estado as any);
+    const borderColor = isSelected ? "#3B82F6" : "white";
+    const borderWidth = isSelected ? "4px" : "3px";
+    const boxShadow = isSelected
+      ? "0 0 0 4px rgba(59, 130, 246, 0.3), 0 2px 8px rgba(0,0,0,0.3)"
+      : "0 2px 8px rgba(0,0,0,0.3)";
 
     return L.divIcon({
       html: `
@@ -26,11 +33,12 @@ export default function TecnicosLayer({ tecnicos }: Props) {
           width: 30px;
           height: 30px;
           border-radius: 50%;
-          border: 3px solid white;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+          border: ${borderWidth} solid ${borderColor};
+          box-shadow: ${boxShadow};
           display: flex;
           align-items: center;
           justify-content: center;
+          cursor: pointer;
         ">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="white"/>
@@ -83,7 +91,12 @@ export default function TecnicosLayer({ tecnicos }: Props) {
           {/* Marcador del técnico */}
           <Marker
             position={[tecnico.ubicacion.lat, tecnico.ubicacion.lng]}
-            icon={crearIconoTecnico(tecnico.estado)}
+            icon={crearIconoTecnico(tecnico.estado, tecnico.id === tecnicoSeleccionado)}
+            eventHandlers={{
+              click: () => {
+                onSeleccionarTecnico(tecnico.id);
+              },
+            }}
           >
             <Tooltip direction="top" offset={[0, -15]} opacity={0.9}>
               <div style={{ textAlign: "center", minWidth: "120px" }}>
