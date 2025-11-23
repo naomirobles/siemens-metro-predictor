@@ -3,15 +3,22 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import LeyendaPredicciones from "@/app/components/LeyendaPredicciones";
+import LeyendaTecnicos from "@/app/components/LeyendaTecnicos";
 import ControlPredicciones from "@/app/components/ControlPredicciones";
 import linea1 from "@/app/data/linea1.json";
+import tecnicosIniciales from "@/app/data/tecnicos.json";
 import { generarPredicciones } from "@/app/utils/mlSimulator";
+import { actualizarPosicionesTecnicos, Tecnico } from "@/app/utils/tecnicosSimulator";
 
 const MapaMetro = dynamic(() => import("@/app/components/MapaMetro"), {
   ssr: false,
 });
 
 const Linea1Layer = dynamic(() => import("@/app/components/Linea1Layer"), {
+  ssr: false,
+});
+
+const TecnicosLayer = dynamic(() => import("@/app/components/TecnicosLayer"), {
   ssr: false,
 });
 
@@ -24,6 +31,8 @@ export default function Linea1Page() {
   const [ultimaActualizacion, setUltimaActualizacion] = useState<Date>();
   const [keyCounter, setKeyCounter] = useState(0);
   const [actualizando, setActualizando] = useState(false);
+  const [tecnicos, setTecnicos] = useState<Tecnico[]>(tecnicosIniciales as Tecnico[]);
+  const [actualizandoTecnicos, setActualizandoTecnicos] = useState(false);
 
   // Obtener lista de estaciones
   const estaciones = linea1.features
@@ -40,6 +49,16 @@ export default function Linea1Page() {
 
     // Desactivar indicador después de 500ms
     setTimeout(() => setActualizando(false), 500);
+  };
+
+  // Función para actualizar posiciones de técnicos
+  const actualizarTecnicos = () => {
+    setActualizandoTecnicos(true);
+    const nuevosTecnicos = actualizarPosicionesTecnicos(tecnicos);
+    setTecnicos(nuevosTecnicos);
+
+    // Desactivar indicador después de 500ms
+    setTimeout(() => setActualizandoTecnicos(false), 500);
   };
 
   // Generar predicciones iniciales
@@ -60,6 +79,18 @@ export default function Linea1Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intervalo, activo]);
 
+  // Actualizar posiciones de técnicos periódicamente (cada 3 segundos)
+  useEffect(() => {
+    if (!activo) return;
+
+    const intervalId = setInterval(() => {
+      actualizarTecnicos();
+    }, 3000); // Actualizar técnicos cada 3 segundos
+
+    return () => clearInterval(intervalId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activo, tecnicos]);
+
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-4">Línea 1 del Metro CDMX</h1>
@@ -71,6 +102,7 @@ export default function Linea1Page() {
         <div className="flex-1">
           <MapaMetro>
             <Linea1Layer predicciones={predicciones} key={keyCounter} />
+            <TecnicosLayer tecnicos={tecnicos} />
           </MapaMetro>
         </div>
 
@@ -83,6 +115,7 @@ export default function Linea1Page() {
             ultimaActualizacion={ultimaActualizacion}
           />
           <LeyendaPredicciones actualizando={actualizando} />
+          <LeyendaTecnicos tecnicos={tecnicos} actualizando={actualizandoTecnicos} />
         </div>
       </div>
     </div>
