@@ -39,34 +39,43 @@ export default function ControlPredicciones({
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200 mb-6">
-      <h3 className="text-lg font-bold mb-3 text-gray-800">
+    <div
+      className="p-5 rounded-xl shadow-2xl border h-full"
+      style={{
+        backgroundColor: 'rgba(2, 0, 38, 0.8)',
+        borderColor: '#83EECD',
+        backdropFilter: 'blur(10px)',
+      }}
+    >
+      <h3
+        className="text-lg font-bold mb-3"
+        style={{ color: '#83EECD' }}
+      >
         Control de Predicciones
       </h3>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {/* Toggle Activo/Pausado */}
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-gray-700">Estado:</span>
-          <button
-            onClick={onToggleActivo}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              activo
-                ? "bg-green-500 hover:bg-green-600 text-white"
-                : "bg-gray-500 hover:bg-gray-600 text-white"
-            }`}
-          >
-            {activo ? "▶ Activo" : "⏸ Pausado"}
-          </button>
-        </div>
+        <button
+          onClick={onToggleActivo}
+          className="w-full px-4 py-2.5 rounded-lg font-semibold transition-all transform hover:scale-105"
+          style={{
+            backgroundColor: activo ? '#83EECD' : 'rgba(131, 238, 205, 0.3)',
+            color: activo ? '#020026' : '#83EECD',
+            border: `2px solid ${activo ? '#83EECD' : 'rgba(131, 238, 205, 0.5)'}`,
+          }}
+        >
+          {activo ? "▶ Activo" : "⏸ Pausado"}
+        </button>
 
         {/* Input de Intervalo */}
         <div>
           <label
             htmlFor="intervalo"
-            className="block text-sm font-medium text-gray-700 mb-2"
+            className="block text-xs font-medium mb-1.5"
+            style={{ color: 'white' }}
           >
-            Intervalo de actualización (segundos):
+            Intervalo (seg):
           </label>
           <input
             id="intervalo"
@@ -76,25 +85,36 @@ export default function ControlPredicciones({
             value={inputValue}
             onChange={handleIntervaloChange}
             disabled={!activo}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full px-3 py-2 rounded-lg text-sm font-medium transition-all disabled:cursor-not-allowed"
+            style={{
+              backgroundColor: activo ? 'rgba(255, 255, 255, 0.1)' : 'rgba(131, 238, 205, 0.05)',
+              border: `2px solid ${activo ? '#83EECD' : 'rgba(131, 238, 205, 0.3)'}`,
+              color: 'white',
+              outline: 'none',
+            }}
           />
-          <p className="text-xs text-gray-500 mt-1">
-            Rango: 1-60 segundos
-          </p>
         </div>
 
         {/* Última Actualización */}
-        <div className="flex items-center justify-between pt-2 border-t border-gray-200">
-          <span className="text-sm text-gray-600">Última actualización:</span>
-          <span className="text-sm font-mono text-gray-800">
+        <div className="flex items-center justify-between text-xs">
+          <span style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+            Última act:
+          </span>
+          <span
+            className="font-mono font-semibold"
+            style={{ color: '#83EECD' }}
+          >
             {formatearTiempo(ultimaActualizacion)}
           </span>
         </div>
 
         {/* Indicador de próxima actualización */}
         {activo && (
-          <div className="flex items-center gap-2 text-sm text-blue-600">
-            <div className="animate-pulse w-2 h-2 bg-blue-600 rounded-full"></div>
+          <div className="flex items-center gap-2 text-xs" style={{ color: '#83EECD' }}>
+            <div
+              className="animate-pulse w-2 h-2 rounded-full"
+              style={{ backgroundColor: '#83EECD' }}
+            ></div>
             Actualizando cada {intervalo}s
           </div>
         )}

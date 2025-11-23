@@ -143,40 +143,83 @@ export default function Linea1Page() {
   }, [activo, tecnicos]);
 
   return (
-    <div className="p-6 **bg-[#020026] text-white** min-h-screen">
-      <h1 className="text-3xl font-bold mb-4">Línea 1 del Metro CDMX</h1>
-      <p className="text-gray-600 mb-6 **text-gray-300**">
-        Monitoreo en tiempo real con predicciones de Machine Learning
-      </p>
+    <main
+      style={{
+        background: 'linear-gradient(135deg, #020026 0%, #83EECD 100%)',
+        minHeight: '100vh',
+      }}
+      className="p-4 sm:p-6 md:p-8"
+    >
+      <div className="text-center mb-8">
+          <h1
+            className="text-4xl sm:text-5xl md:text-6xl font-bold"
+            style={{
+              color: 'white',
+              textShadow: '2px 2px 8px rgba(0, 0, 0, 0.7)',
+            }}
+          >
+            Línea 1 del Metro CDMX
+          </h1>
+          <p
+            className="text-lg sm:text-xl md:text-2xl mt-2"
+            style={{
+              color: 'rgba(255, 255, 255, 0.8)',
+              textShadow: '1px 1px 4px rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            Monitoreo en tiempo real con predicciones de Machine Learning
+          </p>
+      </div>
 
-      <div className="flex gap-6">
-        <div className="flex-1">
-          <MapaMetro>
-            <Linea1Layer predicciones={predicciones} key={keyCounter} />
-            <TecnicosLayer
-              tecnicos={tecnicos}
-              tecnicoSeleccionado={tecnicoSeleccionado}
-              onSeleccionarTecnico={(id) => {
-                if (modoAsignacion) {
-                  setTecnicoSeleccionado(tecnicoSeleccionado === id ? null : id);
-                }
-              }}
-            />
-            <MapClickHandler
-              onMapClick={asignarDestino}
-              enabled={modoAsignacion && tecnicoSeleccionado !== null}
-            />
-          </MapaMetro>
+      {/* Top Controls Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
+        <ControlPredicciones
+          intervalo={intervalo}
+          onIntervaloChange={setIntervalo}
+          activo={activo}
+          onToggleActivo={() => setActivo(!activo)}
+          ultimaActualizacion={ultimaActualizacion}
+        />
+        <LeyendaTecnicos tecnicos={tecnicos} actualizando={actualizandoTecnicos} />
+        <div className="md:col-span-2">
+          <LeyendaPredicciones actualizando={actualizando} />
+        </div>
+      </div>
+
+      {/* Main Content: Map + Selector */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Map Container - Takes 2 columns */}
+        <div className="lg:col-span-2">
+          <div
+            className="rounded-2xl overflow-hidden shadow-2xl h-[60vh] lg:h-[75vh]"
+            style={{
+              border: '2px solid #83EECD',
+              backgroundColor: 'rgba(2, 0, 38, 0.4)',
+              backdropFilter: 'blur(15px)',
+              boxShadow: '0 0 30px rgba(131, 238, 205, 0.3)',
+            }}
+          >
+            <MapaMetro>
+              <Linea1Layer predicciones={predicciones} key={keyCounter} />
+              <TecnicosLayer
+                tecnicos={tecnicos}
+                tecnicoSeleccionado={tecnicoSeleccionado}
+                onSeleccionarTecnico={(id) => {
+                  if (modoAsignacion) {
+                    setTecnicoSeleccionado(tecnicoSeleccionado === id ? null : id);
+                  }
+                }}
+              />
+              <MapClickHandler
+                onMapClick={asignarDestino}
+                enabled={modoAsignacion && tecnicoSeleccionado !== null}
+              />
+            </MapaMetro>
+          </div>
         </div>
 
-        <div className="w-80 space-y-6">
-          <ControlPredicciones
-            intervalo={intervalo}
-            onIntervaloChange={setIntervalo}
-            activo={activo}
-            onToggleActivo={() => setActivo(!activo)}
-            ultimaActualizacion={ultimaActualizacion}
-          />
+        {/* Selector de Técnicos - Takes 1 column */}
+        <div className="lg:col-span-1">
           <SelectorTecnicos
             tecnicos={tecnicos}
             tecnicoSeleccionado={tecnicoSeleccionado}
@@ -184,8 +227,6 @@ export default function Linea1Page() {
             modoAsignacion={modoAsignacion}
             onToggleModoAsignacion={() => setModoAsignacion(!modoAsignacion)}
           />
-          <LeyendaPredicciones actualizando={actualizando} />
-          <LeyendaTecnicos tecnicos={tecnicos} actualizando={actualizandoTecnicos} />
         </div>
       </div>
 
@@ -197,6 +238,6 @@ export default function Linea1Page() {
           onClose={() => setToast(null)}
         />
       )}
-    </div>
+    </main>
   );
 }

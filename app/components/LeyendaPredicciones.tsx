@@ -4,42 +4,67 @@ interface Props {
 
 export default function LeyendaPredicciones({ actualizando }: Props) {
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg border border-gray-200">
+    <div
+      className="p-5 rounded-xl shadow-2xl border h-full"
+      style={{
+        backgroundColor: 'rgba(2, 0, 38, 0.8)',
+        borderColor: '#83EECD',
+        backdropFilter: 'blur(10px)',
+      }}
+    >
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-lg font-bold text-gray-800">
+        <h3
+          className="text-lg font-bold"
+          style={{ color: '#83EECD' }}
+        >
           Predicciones ML
         </h3>
         {actualizando && (
-          <div className="flex items-center gap-2 text-xs text-green-600">
-            <div className="animate-ping w-2 h-2 bg-green-600 rounded-full"></div>
-            <span>Actualizando</span>
+          <div className="flex items-center gap-2 text-xs" style={{ color: '#83EECD' }}>
+            <div
+              className="animate-ping w-2 h-2 rounded-full"
+              style={{ backgroundColor: '#83EECD' }}
+            ></div>
+            <span className="font-medium">Actualizando</span>
           </div>
         )}
       </div>
-      <p className="text-sm text-gray-600 mb-3">
+
+      <p className="text-xs mb-3" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
         Probabilidad de incidente en estación:
       </p>
-      <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 rounded-full bg-[#10B981] border-2 border-white shadow-sm"></div>
-          <span className="text-sm text-gray-700">
+
+      <div className="flex flex-wrap gap-4 items-center">
+        <div className="flex items-center gap-2">
+          <div
+            className="w-6 h-6 rounded-full border-2 shadow-lg"
+            style={{ backgroundColor: '#10B981', borderColor: '#83EECD' }}
+          ></div>
+          <span className="text-sm font-medium" style={{ color: 'white' }}>
             Baja (&lt; 40%)
           </span>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 rounded-full bg-[#F59E0B] border-2 border-white shadow-sm"></div>
-          <span className="text-sm text-gray-700">
+        <div className="flex items-center gap-2">
+          <div
+            className="w-6 h-6 rounded-full border-2 shadow-lg"
+            style={{ backgroundColor: '#F59E0B', borderColor: '#83EECD' }}
+          ></div>
+          <span className="text-sm font-medium" style={{ color: 'white' }}>
             Media (40% - 70%)
           </span>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="w-6 h-6 rounded-full bg-[#EF4444] border-2 border-white shadow-sm"></div>
-          <span className="text-sm text-gray-700">
+        <div className="flex items-center gap-2">
+          <div
+            className="w-6 h-6 rounded-full border-2 shadow-lg"
+            style={{ backgroundColor: '#EF4444', borderColor: '#83EECD' }}
+          ></div>
+          <span className="text-sm font-medium" style={{ color: 'white' }}>
             Alta (&gt; 70%)
           </span>
         </div>
       </div>
-      <p className="text-xs text-gray-500 mt-3 italic">
+
+      <p className="text-xs mt-3 italic" style={{ color: 'rgba(131, 238, 205, 0.7)' }}>
         * Valores generados aleatoriamente para simulación
       </p>
     </div>
