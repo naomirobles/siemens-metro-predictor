@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { Marker, Popup, Tooltip } from "react-leaflet";
+import { Marker, Popup, Tooltip, Polyline, CircleMarker } from "react-leaflet";
 import L from "leaflet";
 import { Tecnico, getColorPorEstado, getTextoEstado } from "@/app/utils/tecnicosSimulator";
 
@@ -47,51 +47,91 @@ export default function TecnicosLayer({ tecnicos }: Props) {
   return (
     <>
       {tecnicos.map((tecnico) => (
-        <Marker
-          key={tecnico.id}
-          position={[tecnico.ubicacion.lat, tecnico.ubicacion.lng]}
-          icon={crearIconoTecnico(tecnico.estado)}
-        >
-          <Tooltip direction="top" offset={[0, -15]} opacity={0.9}>
-            <div style={{ textAlign: "center", minWidth: "120px" }}>
-              <strong>{tecnico.id}</strong>
-            </div>
-          </Tooltip>
+        <div key={tecnico.id}>
+          {/* Línea de ruta si tiene destino */}
+          {tecnico.destino && (
+            <>
+              <Polyline
+                positions={[
+                  [tecnico.ubicacion.lat, tecnico.ubicacion.lng],
+                  [tecnico.destino.lat, tecnico.destino.lng],
+                ]}
+                color="#3B82F6"
+                weight={3}
+                opacity={0.7}
+                dashArray="10, 10"
+              />
+              {/* Marcador de destino */}
+              <CircleMarker
+                center={[tecnico.destino.lat, tecnico.destino.lng]}
+                radius={8}
+                fillColor="#F59E0B"
+                color="#ffffff"
+                weight={2}
+                opacity={1}
+                fillOpacity={0.8}
+              >
+                <Tooltip direction="top" opacity={0.9}>
+                  <div style={{ textAlign: "center" }}>
+                    <strong>Destino: {tecnico.id}</strong>
+                  </div>
+                </Tooltip>
+              </CircleMarker>
+            </>
+          )}
 
-          <Popup>
-            <div style={{ minWidth: "200px" }}>
-              <h3 style={{ margin: "0 0 8px 0", fontSize: "16px", fontWeight: "bold" }}>
-                {tecnico.nombre}
-              </h3>
-              <div style={{ fontSize: "14px", lineHeight: "1.6" }}>
-                <p style={{ margin: "4px 0" }}>
-                  <strong>ID:</strong> {tecnico.id}
-                </p>
-                <p style={{ margin: "4px 0" }}>
-                  <strong>Especialidad:</strong> {tecnico.especialidad}
-                </p>
-                <p style={{ margin: "4px 0" }}>
-                  <strong>Estado:</strong>{" "}
-                  <span
-                    style={{
-                      color: getColorPorEstado(tecnico.estado),
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {getTextoEstado(tecnico.estado)}
-                  </span>
-                </p>
-                <p style={{ margin: "4px 0" }}>
-                  <strong>Estación cercana:</strong> {tecnico.estacionCercana}
-                </p>
-                <p style={{ margin: "8px 0 0 0", fontSize: "12px", color: "#666" }}>
-                  Lat: {tecnico.ubicacion.lat.toFixed(4)}, Lng:{" "}
-                  {tecnico.ubicacion.lng.toFixed(4)}
-                </p>
+          {/* Marcador del técnico */}
+          <Marker
+            position={[tecnico.ubicacion.lat, tecnico.ubicacion.lng]}
+            icon={crearIconoTecnico(tecnico.estado)}
+          >
+            <Tooltip direction="top" offset={[0, -15]} opacity={0.9}>
+              <div style={{ textAlign: "center", minWidth: "120px" }}>
+                <strong>{tecnico.id}</strong>
               </div>
-            </div>
-          </Popup>
-        </Marker>
+            </Tooltip>
+
+            <Popup>
+              <div style={{ minWidth: "200px" }}>
+                <h3 style={{ margin: "0 0 8px 0", fontSize: "16px", fontWeight: "bold" }}>
+                  {tecnico.nombre}
+                </h3>
+                <div style={{ fontSize: "14px", lineHeight: "1.6" }}>
+                  <p style={{ margin: "4px 0" }}>
+                    <strong>ID:</strong> {tecnico.id}
+                  </p>
+                  <p style={{ margin: "4px 0" }}>
+                    <strong>Especialidad:</strong> {tecnico.especialidad}
+                  </p>
+                  <p style={{ margin: "4px 0" }}>
+                    <strong>Estado:</strong>{" "}
+                    <span
+                      style={{
+                        color: getColorPorEstado(tecnico.estado),
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {getTextoEstado(tecnico.estado)}
+                    </span>
+                  </p>
+                  <p style={{ margin: "4px 0" }}>
+                    <strong>Estación cercana:</strong> {tecnico.estacionCercana}
+                  </p>
+                  {tecnico.destino && (
+                    <p style={{ margin: "4px 0" }}>
+                      <strong>Destino:</strong>{" "}
+                      <span style={{ color: "#F59E0B" }}>Asignado</span>
+                    </p>
+                  )}
+                  <p style={{ margin: "8px 0 0 0", fontSize: "12px", color: "#666" }}>
+                    Lat: {tecnico.ubicacion.lat.toFixed(4)}, Lng:{" "}
+                    {tecnico.ubicacion.lng.toFixed(4)}
+                  </p>
+                </div>
+              </div>
+            </Popup>
+          </Marker>
+        </div>
       ))}
     </>
   );

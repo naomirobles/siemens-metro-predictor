@@ -5,44 +5,85 @@
 
 export type EstadoTecnico = "disponible" | "en_ruta" | "en_servicio";
 
+export interface Ubicacion {
+  lat: number;
+  lng: number;
+}
+
 export interface Tecnico {
   id: string;
   nombre: string;
   especialidad: string;
   estado: EstadoTecnico;
-  ubicacion: {
-    lat: number;
-    lng: number;
-  };
+  ubicacion: Ubicacion;
   estacionCercana: string;
+  destino?: Ubicacion; // Ubicación objetivo asignada por el usuario
+}
+
+/**
+ * Calcula la distancia entre dos ubicaciones (en grados, aproximado)
+ */
+function calcularDistancia(ubicacion1: Ubicacion, ubicacion2: Ubicacion): number {
+  const deltaLat = ubicacion2.lat - ubicacion1.lat;
+  const deltaLng = ubicacion2.lng - ubicacion1.lng;
+  return Math.sqrt(deltaLat * deltaLat + deltaLng * deltaLng);
 }
 
 /**
  * Simula un pequeño movimiento del técnico
- * Los técnicos se mueven de forma aleatoria en un radio pequeño
+ * Si tiene un destino asignado, se mueve hacia él. Si no, se mueve aleatoriamente.
  *
  * @param tecnico - Técnico actual
  * @returns Técnico con ubicación actualizada
  */
 export function simularMovimiento(tecnico: Tecnico): Tecnico {
-  // Movimiento aleatorio pequeño (aproximadamente 100-500 metros)
-  const deltaLat = (Math.random() - 0.5) * 0.005; // ~500m max
-  const deltaLng = (Math.random() - 0.5) * 0.005;
-
-  // 30% de probabilidad de cambiar de estado
+  let nuevaUbicacion = { ...tecnico.ubicacion };
   let nuevoEstado = tecnico.estado;
-  if (Math.random() < 0.3) {
-    const estados: EstadoTecnico[] = ["disponible", "en_ruta", "en_servicio"];
-    nuevoEstado = estados[Math.floor(Math.random() * estados.length)];
+  let nuevoDestino = tecnico.destino;
+
+  // Si tiene un destino asignado, moverse hacia él
+  if (tecnico.destino) {
+    const distancia = calcularDistancia(tecnico.ubicacion, tecnico.destino);
+    const umbralLlegada = 0.0005; // ~50 metros
+
+    if (distancia <= umbralLlegada) {
+      // Ha llegado al destino
+      nuevaUbicacion = { ...tecnico.destino };
+      nuevoDestino = undefined;
+      nuevoEstado = "en_servicio";
+    } else {
+      // Moverse hacia el destino
+      const velocidad = 0.001; // ~100m por actualización
+      const factor = Math.min(velocidad / distancia, 1);
+
+      nuevaUbicacion = {
+        lat: tecnico.ubicacion.lat + (tecnico.destino.lat - tecnico.ubicacion.lat) * factor,
+        lng: tecnico.ubicacion.lng + (tecnico.destino.lng - tecnico.ubicacion.lng) * factor,
+      };
+      nuevoEstado = "en_ruta";
+    }
+  } else {
+    // Movimiento aleatorio pequeño (aproximadamente 100-500 metros)
+    const deltaLat = (Math.random() - 0.5) * 0.005; // ~500m max
+    const deltaLng = (Math.random() - 0.5) * 0.005;
+
+    nuevaUbicacion = {
+      lat: tecnico.ubicacion.lat + deltaLat,
+      lng: tecnico.ubicacion.lng + deltaLng,
+    };
+
+    // 30% de probabilidad de cambiar de estado (solo si no tiene destino)
+    if (Math.random() < 0.3) {
+      const estados: EstadoTecnico[] = ["disponible", "en_ruta", "en_servicio"];
+      nuevoEstado = estados[Math.floor(Math.random() * estados.length)];
+    }
   }
 
   return {
     ...tecnico,
     estado: nuevoEstado,
-    ubicacion: {
-      lat: tecnico.ubicacion.lat + deltaLat,
-      lng: tecnico.ubicacion.lng + deltaLng,
-    },
+    ubicacion: nuevaUbicacion,
+    destino: nuevoDestino,
   };
 }
 

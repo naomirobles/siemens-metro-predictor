@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import LeyendaPredicciones from "@/app/components/LeyendaPredicciones";
 import LeyendaTecnicos from "@/app/components/LeyendaTecnicos";
+import SelectorTecnicos from "@/app/components/SelectorTecnicos";
 import ControlPredicciones from "@/app/components/ControlPredicciones";
 import linea1 from "@/app/data/linea1.json";
 import tecnicosIniciales from "@/app/data/tecnicos.json";
@@ -22,6 +23,10 @@ const TecnicosLayer = dynamic(() => import("@/app/components/TecnicosLayer"), {
   ssr: false,
 });
 
+const MapClickHandler = dynamic(() => import("@/app/components/MapClickHandler"), {
+  ssr: false,
+});
+
 export default function Linea1Page() {
   const [intervalo, setIntervalo] = useState(5); // segundos
   const [activo, setActivo] = useState(true);
@@ -33,6 +38,8 @@ export default function Linea1Page() {
   const [actualizando, setActualizando] = useState(false);
   const [tecnicos, setTecnicos] = useState<Tecnico[]>(tecnicosIniciales as Tecnico[]);
   const [actualizandoTecnicos, setActualizandoTecnicos] = useState(false);
+  const [tecnicoSeleccionado, setTecnicoSeleccionado] = useState<string | null>(null);
+  const [modoAsignacion, setModoAsignacion] = useState(false);
 
   // Obtener lista de estaciones
   const estaciones = linea1.features
@@ -59,6 +66,24 @@ export default function Linea1Page() {
 
     // Desactivar indicador después de 500ms
     setTimeout(() => setActualizandoTecnicos(false), 500);
+  };
+
+  // Función para asignar destino a un técnico
+  const asignarDestino = (lat: number, lng: number) => {
+    if (!tecnicoSeleccionado) return;
+
+    const nuevosTecnicos = tecnicos.map((tecnico) => {
+      if (tecnico.id === tecnicoSeleccionado) {
+        return {
+          ...tecnico,
+          destino: { lat, lng },
+        };
+      }
+      return tecnico;
+    });
+
+    setTecnicos(nuevosTecnicos);
+    setTecnicoSeleccionado(null);
   };
 
   // Generar predicciones iniciales
@@ -103,6 +128,10 @@ export default function Linea1Page() {
           <MapaMetro>
             <Linea1Layer predicciones={predicciones} key={keyCounter} />
             <TecnicosLayer tecnicos={tecnicos} />
+            <MapClickHandler
+              onMapClick={asignarDestino}
+              enabled={modoAsignacion && tecnicoSeleccionado !== null}
+            />
           </MapaMetro>
         </div>
 
@@ -113,6 +142,13 @@ export default function Linea1Page() {
             activo={activo}
             onToggleActivo={() => setActivo(!activo)}
             ultimaActualizacion={ultimaActualizacion}
+          />
+          <SelectorTecnicos
+            tecnicos={tecnicos}
+            tecnicoSeleccionado={tecnicoSeleccionado}
+            onSeleccionar={setTecnicoSeleccionado}
+            modoAsignacion={modoAsignacion}
+            onToggleModoAsignacion={() => setModoAsignacion(!modoAsignacion)}
           />
           <LeyendaPredicciones actualizando={actualizando} />
           <LeyendaTecnicos tecnicos={tecnicos} actualizando={actualizandoTecnicos} />
