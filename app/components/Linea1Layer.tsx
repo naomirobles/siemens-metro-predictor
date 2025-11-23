@@ -8,10 +8,11 @@ import { estiloLinea } from "@/app/components/EstilosLeaflet";
 import {
   getColorPorProbabilidad,
   formatearPorcentaje,
+  PrediccionConFalla,
 } from "@/app/utils/mlSimulator";
 
 interface Props {
-  predicciones: Map<string, number>;
+  predicciones: Map<string, PrediccionConFalla>;
   key?: number; // Para forzar re-render cuando cambian las predicciones
 }
 
@@ -35,7 +36,9 @@ export default function Linea1Layer({ predicciones }: Props) {
         }
 
         // Obtener predicción para esta estación
-        const probabilidad = predicciones.get(nombreEstacion) ?? 0;
+        const prediccion = predicciones.get(nombreEstacion);
+        const probabilidad = prediccion?.probabilidad ?? 0;
+        const fallaMasProbable = prediccion?.fallaMasProbable ?? "Sin datos";
         const color = getColorPorProbabilidad(probabilidad);
 
         // Crear marcador con color basado en la probabilidad
@@ -48,12 +51,15 @@ export default function Linea1Layer({ predicciones }: Props) {
           fillOpacity: 0.9,
         });
 
-        // Tooltip con nombre y probabilidad
+        // Tooltip con nombre, probabilidad y falla más probable
         const tooltipContent = `
           <div style="text-align: center;">
             <strong>${nombreEstacion}</strong><br/>
             <span style="color: ${color}; font-weight: bold;">
               ${formatearPorcentaje(probabilidad)}
+            </span><br/>
+            <span style="font-size: 0.9em; color: #666;">
+              ${fallaMasProbable}
             </span>
           </div>
         `;

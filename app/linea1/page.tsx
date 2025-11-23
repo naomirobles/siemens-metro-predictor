@@ -9,7 +9,7 @@ import ControlPredicciones from "@/app/components/ControlPredicciones";
 import Toast from "@/app/components/Toast";
 import linea1 from "@/app/data/linea1.json";
 import tecnicosIniciales from "@/app/data/tecnicos.json";
-import { generarPredicciones } from "@/app/utils/mlSimulator";
+import { obtenerPrediccionesAPI, PrediccionConFalla } from "@/app/utils/mlSimulator";
 import { actualizarPosicionesTecnicos, Tecnico } from "@/app/utils/tecnicosSimulator";
 import { enviarNotificacionUbicacion } from "@/app/utils/telegramNotifications";
 
@@ -32,7 +32,7 @@ const MapClickHandler = dynamic(() => import("@/app/components/MapClickHandler")
 export default function Linea1Page() {
   const [intervalo, setIntervalo] = useState(5); // segundos
   const [activo, setActivo] = useState(true);
-  const [predicciones, setPredicciones] = useState<Map<string, number>>(
+  const [predicciones, setPredicciones] = useState<Map<string, PrediccionConFalla>>(
     new Map()
   );
   const [ultimaActualizacion, setUltimaActualizacion] = useState<Date>();
@@ -49,10 +49,10 @@ export default function Linea1Page() {
     .filter((f) => f.geometry.type === "Point" && f.properties.estacion)
     .map((f) => f.properties.estacion as string);
 
-  // Función para actualizar predicciones
-  const actualizarPredicciones = () => {
+  // Función para actualizar predicciones desde la API
+  const actualizarPredicciones = async () => {
     setActualizando(true);
-    const nuevasPredicciones = generarPredicciones(estaciones);
+    const nuevasPredicciones = await obtenerPrediccionesAPI();
     setPredicciones(nuevasPredicciones);
     setUltimaActualizacion(new Date());
     setKeyCounter((prev) => prev + 1); // Forzar re-render del mapa
