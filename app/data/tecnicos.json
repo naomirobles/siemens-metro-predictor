@@ -21,7 +21,7 @@
       "lng": -99.1032
     },
     "estacionCercana": "Balderas",
-    "telegramChatId": "6078246080"
+    "telegramChatId": "8303956948"
   },
   {
     "id": "TEC003",
@@ -33,7 +33,7 @@
       "lng": -99.0714
     },
     "estacionCercana": "Pino Suárez",
-    "telegramChatId": null
+    "telegramChatId": "8303956948"
   },
   {
     "id": "TEC004",
@@ -45,7 +45,7 @@
       "lng": -99.0731
     },
     "estacionCercana": "Pantitlán",
-    "telegramChatId": null
+    "telegramChatId": "8303956948"
   },
   {
     "id": "TEC005",
@@ -57,6 +57,6 @@
       "lng": -99.1414
     },
     "estacionCercana": "Chapultepec",
-    "telegramChatId": null
+    "telegramChatId": "8303956948"
   }
 ]
