@@ -1,0 +1,62 @@
+[
+  {
+    "id": "TEC001",
+    "nombre": "Juan Pérez",
+    "especialidad": "Electricidad",
+    "estado": "disponible",
+    "ubicacion": {
+      "lat": 19.4260,
+      "lng": -99.1333
+    },
+    "estacionCercana": "Observatorio",
+    "telegramChatId": "8303956948"
+  },
+  {
+    "id": "TEC002",
+    "nombre": "María García",
+    "especialidad": "Mecánica",
+    "estado": "en_ruta",
+    "ubicacion": {
+      "lat": 19.4195,
+      "lng": -99.1032
+    },
+    "estacionCercana": "Balderas",
+    "telegramChatId": null
+  },
+  {
+    "id": "TEC003",
+    "nombre": "Carlos López",
+    "especialidad": "Señalización",
+    "estado": "en_servicio",
+    "ubicacion": {
+      "lat": 19.4269,
+      "lng": -99.0714
+    },
+    "estacionCercana": "Pino Suárez",
+    "telegramChatId": null
+  },
+  {
+    "id": "TEC004",
+    "nombre": "Ana Martínez",
+    "especialidad": "Electricidad",
+    "estado": "disponible",
+    "ubicacion": {
+      "lat": 19.3584,
+      "lng": -99.0731
+    },
+    "estacionCercana": "Pantitlán",
+    "telegramChatId": null
+  },
+  {
+    "id": "TEC005",
+    "nombre": "Roberto Sánchez",
+    "especialidad": "Sistemas",
+    "estado": "en_ruta",
+    "ubicacion": {
+      "lat": 19.4338,
+      "lng": -99.1414
+    },
+    "estacionCercana": "Chapultepec",
+    "telegramChatId": null
+  }
+]
