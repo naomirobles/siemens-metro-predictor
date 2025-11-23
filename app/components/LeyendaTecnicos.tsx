@@ -144,10 +144,6 @@ export default function LeyendaTecnicos({ tecnicos, actualizando }: Props) {
           </span>
         </div>
       </div>
-
-      <p className="text-xs mt-3 italic" style={{ color: 'rgba(131, 238, 205, 0.7)' }}>
-        * Ubicaciones simuladas en tiempo real
-      </p>
     </div>
   );
 }

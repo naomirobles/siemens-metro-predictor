@@ -64,9 +64,6 @@ export default function LeyendaPredicciones({ actualizando }: Props) {
         </div>
       </div>
 
-      <p className="text-xs mt-3 italic" style={{ color: 'rgba(131, 238, 205, 0.7)' }}>
-        * Valores generados aleatoriamente para simulación
-      </p>
     </div>
   );
 }
