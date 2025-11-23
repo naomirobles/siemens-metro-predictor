@@ -43,6 +43,7 @@ export default function Linea1Page() {
   const [tecnicoSeleccionado, setTecnicoSeleccionado] = useState<string | null>(null);
   const [modoAsignacion, setModoAsignacion] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "info" } | null>(null);
+  const [alertasMostradas, setAlertasMostradas] = useState<Set<string>>(new Set());
 
   // Obtener lista de estaciones
   const estaciones = linea1.features
@@ -56,6 +57,46 @@ export default function Linea1Page() {
     setPredicciones(nuevasPredicciones);
     setUltimaActualizacion(new Date());
     setKeyCounter((prev) => prev + 1); // Forzar re-render del mapa
+
+    // Detectar alertas rojas (probabilidad > 70%)
+    const alertasRojas: string[] = [];
+    const estacionesEnRojo = new Set<string>();
+
+    nuevasPredicciones.forEach((prediccion, estacion) => {
+      if (prediccion.probabilidad > 0.7) {
+        estacionesEnRojo.add(estacion);
+        if (!alertasMostradas.has(estacion)) {
+          alertasRojas.push(estacion);
+        }
+      }
+    });
+
+    // Limpiar alertas de estaciones que ya no están en rojo
+    setAlertasMostradas((prev) => {
+      const nuevo = new Set<string>();
+      prev.forEach((est) => {
+        if (estacionesEnRojo.has(est)) {
+          nuevo.add(est);
+        }
+      });
+      return nuevo;
+    });
+
+    // Mostrar notificación si hay alertas rojas nuevas
+    if (alertasRojas.length > 0) {
+      const estacionesTexto = alertasRojas.join(", ");
+      setToast({
+        message: `🚨 ALERTA CRÍTICA: ${estacionesTexto} - Probabilidad alta de falla`,
+        type: "error",
+      });
+
+      // Marcar estas alertas como mostradas
+      setAlertasMostradas((prev) => {
+        const nuevo = new Set(prev);
+        alertasRojas.forEach((est) => nuevo.add(est));
+        return nuevo;
+      });
+    }
 
     // Desactivar indicador después de 500ms
     setTimeout(() => setActualizando(false), 500);

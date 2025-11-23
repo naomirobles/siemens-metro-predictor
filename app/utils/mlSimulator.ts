@@ -51,8 +51,11 @@ export async function obtenerPrediccionesAPI(): Promise<Map<string, PrediccionCo
     // Extraer solo los datos relevantes: estación, falla más probable y su probabilidad
     if (data.estados_estaciones && Array.isArray(data.estados_estaciones)) {
       data.estados_estaciones.forEach((estado: any) => {
+        // Multiplicar por 2.5 para efectos de demostración y limitar a 1.0 (100%)
+        const probabilidadAumentada = Math.min((estado.falla_mas_probable_prob / 100) * 2.5, 1.0);
+
         predicciones.set(estado.estacion, {
-          probabilidad: estado.falla_mas_probable_prob / 100, // Convertir de % a 0-1
+          probabilidad: probabilidadAumentada,
           fallaMasProbable: estado.falla_mas_probable,
         });
       });
