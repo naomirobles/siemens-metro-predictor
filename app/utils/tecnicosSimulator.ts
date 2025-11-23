@@ -18,6 +18,7 @@ export interface Tecnico {
   ubicacion: Ubicacion;
   estacionCercana: string;
   destino?: Ubicacion; // Ubicación objetivo asignada por el usuario
+  telegramChatId?: string | null; // Chat ID de Telegram para enviar notificaciones
 }
 
 /**

@@ -6,10 +6,12 @@ import LeyendaPredicciones from "@/app/components/LeyendaPredicciones";
 import LeyendaTecnicos from "@/app/components/LeyendaTecnicos";
 import SelectorTecnicos from "@/app/components/SelectorTecnicos";
 import ControlPredicciones from "@/app/components/ControlPredicciones";
+import Toast from "@/app/components/Toast";
 import linea1 from "@/app/data/linea1.json";
 import tecnicosIniciales from "@/app/data/tecnicos.json";
 import { generarPredicciones } from "@/app/utils/mlSimulator";
 import { actualizarPosicionesTecnicos, Tecnico } from "@/app/utils/tecnicosSimulator";
+import { enviarNotificacionUbicacion } from "@/app/utils/telegramNotifications";
 
 const MapaMetro = dynamic(() => import("@/app/components/MapaMetro"), {
   ssr: false,
@@ -40,6 +42,7 @@ export default function Linea1Page() {
   const [actualizandoTecnicos, setActualizandoTecnicos] = useState(false);
   const [tecnicoSeleccionado, setTecnicoSeleccionado] = useState<string | null>(null);
   const [modoAsignacion, setModoAsignacion] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: "success" | "error" | "info" } | null>(null);
 
   // Obtener lista de estaciones
   const estaciones = linea1.features
@@ -69,9 +72,14 @@ export default function Linea1Page() {
   };
 
   // Función para asignar destino a un técnico
-  const asignarDestino = (lat: number, lng: number) => {
+  const asignarDestino = async (lat: number, lng: number) => {
     if (!tecnicoSeleccionado) return;
 
+    // Encontrar el técnico seleccionado
+    const tecnicoActual = tecnicos.find((t) => t.id === tecnicoSeleccionado);
+    if (!tecnicoActual) return;
+
+    // Actualizar estado con el nuevo destino
     const nuevosTecnicos = tecnicos.map((tecnico) => {
       if (tecnico.id === tecnicoSeleccionado) {
         return {
@@ -83,6 +91,24 @@ export default function Linea1Page() {
     });
 
     setTecnicos(nuevosTecnicos);
+
+    // Enviar notificación de Telegram
+    const resultado = await enviarNotificacionUbicacion(tecnicoActual, { lat, lng });
+
+    if (resultado.success) {
+      console.log(`✅ Notificación enviada a ${tecnicoActual.nombre} via Telegram`);
+      setToast({
+        message: `Ubicación enviada a ${tecnicoActual.nombre} via Telegram`,
+        type: "success",
+      });
+    } else {
+      console.warn(`⚠️ No se pudo enviar notificación: ${resultado.error}`);
+      setToast({
+        message: resultado.error || "No se pudo enviar la notificación",
+        type: "error",
+      });
+    }
+
     setTecnicoSeleccionado(null);
   };
 
@@ -162,6 +188,15 @@ export default function Linea1Page() {
           <LeyendaTecnicos tecnicos={tecnicos} actualizando={actualizandoTecnicos} />
         </div>
       </div>
+
+      {/* Toast de notificaciones */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 }

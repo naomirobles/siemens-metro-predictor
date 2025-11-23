@@ -8,7 +8,8 @@
       "lat": 19.4260,
       "lng": -99.1333
     },
-    "estacionCercana": "Observatorio"
+    "estacionCercana": "Observatorio",
+    "telegramChatId": "8303956948"
   },
   {
     "id": "TEC002",
@@ -19,7 +20,8 @@
       "lat": 19.4195,
       "lng": -99.1032
     },
-    "estacionCercana": "Balderas"
+    "estacionCercana": "Balderas",
+    "telegramChatId": null
   },
   {
     "id": "TEC003",
@@ -30,7 +32,8 @@
       "lat": 19.4269,
       "lng": -99.0714
     },
-    "estacionCercana": "Pino Suárez"
+    "estacionCercana": "Pino Suárez",
+    "telegramChatId": null
   },
   {
     "id": "TEC004",
@@ -41,7 +44,8 @@
       "lat": 19.3584,
       "lng": -99.0731
     },
-    "estacionCercana": "Pantitlán"
+    "estacionCercana": "Pantitlán",
+    "telegramChatId": null
   },
   {
     "id": "TEC005",
@@ -52,6 +56,7 @@
       "lat": 19.4338,
       "lng": -99.1414
     },
-    "estacionCercana": "Chapultepec"
+    "estacionCercana": "Chapultepec",
+    "telegramChatId": null
   }
 ]
